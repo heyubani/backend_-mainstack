@@ -23,7 +23,7 @@ const articleSchema: Schema = new Schema({
     },
     createdBy: {
         type: Schema.Types.ObjectId,
-        ref: 'User', // Reference to the User model
+        ref: 'User',
         required: true
     }
 }, {

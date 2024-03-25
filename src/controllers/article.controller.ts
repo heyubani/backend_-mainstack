@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import articleSchema from '../models/article.model';
 import { CreateTaskType, createTaskSchema } from '../schemas/task.schema';
-
+const { ObjectId } = require('mongoose').Types;
 // Create a new article
 export const createArticle = async (
   req: Request<{}, {}, CreateTaskType>,
@@ -29,7 +29,7 @@ export const createArticle = async (
       data: article
     });
   } catch (error) {
-    throw new Error(error.message); 
+    throw new Error(error.message);
   }
 };
 
@@ -75,8 +75,7 @@ export const getArticleById = async (
   res: Response
 ) => {
   try {
-    const user = (req as any).user;
-    const article = await articleSchema.findOne({ _id: req.params.id, 'user._id': user._id });
+    const article = await articleSchema.findOne({ _id: req.params.id }).lean();
     if (!article) {
       return res.status(404).json({
         status: 'error',
@@ -84,14 +83,14 @@ export const getArticleById = async (
         message: 'Article not found',
       });
     }
-      return res.status(200).json({
-        status: 'success',
-        code: 200,
-        message: 'Article fetch successfully.',
-        data: article
-      });
+    return res.status(200).json({
+      status: 'success',
+      code: 200,
+      message: 'Article fetch successfully.',
+      data: article
+    });
   } catch (error) {
-      throw new Error('Failed to retrieve article');
+    throw new Error(`Failed to retrieve article::: ${error.message}`);
   }
 };
 
@@ -101,8 +100,8 @@ export const deleteArticle = async (
   res: Response
 ) => {
   try {
-    const user = (req as any).user;
-    const article = await articleSchema.findOne({ _id: req.params.id, 'user._id': user._id });
+    const { id } = req.params;
+    const article = await articleSchema.findOne({ _id: id }).lean();
     if (!article) {
       return res.status(404).json({
         status: 'error',
@@ -110,12 +109,12 @@ export const deleteArticle = async (
         message: 'Article not found',
       });
     }
-    await articleSchema.findByIdAndDelete(req.params.id); 
+    await articleSchema.findByIdAndDelete(id).lean();
     res.status(200).json({
       status: 'success',
       message: 'Article deleted successfully',
     });
   } catch (error) {
-    throw new Error('Failed to delete article');
+    throw new Error(`Failed to delete article:: ${error.message}`);
   }
 };

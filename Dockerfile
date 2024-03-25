@@ -1,5 +1,5 @@
 # Use Node.js image as base
-FROM node:18
+FROM --platform=linux/amd64 node:18
 
 # Set working directory inside the container
 WORKDIR /app

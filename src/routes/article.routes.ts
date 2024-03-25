@@ -26,7 +26,7 @@ router.get(
      );
 
 router.delete(
-    "/delete/:id",
+    "/:id",
      deleteArticle
      );
 
