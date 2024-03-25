@@ -27,7 +27,7 @@ const articleSchema: Schema = new Schema({
         required: true
     }
 }, {
-    timestamps: true // Enable timestamps
+    timestamps: true
 });
 
 // Create and export the model based on the schema

@@ -10,9 +10,9 @@ export const signUp = async (req: Request, res: Response) => {
     try {
         const existingUser = await userSchema.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({
+            return res.status(409).json({
                 status: 'error',
-                code: 400,
+                code: 409,
                 message: 'Account already exists.',
             });
         }
@@ -33,14 +33,23 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     try {
         const user = await userSchema.findOne({ email });
-        if (!user) throw new Error('User not found.');
-
         const validPassword = await bcrypt.compare(password, user.password);
-        if (!validPassword) throw new Error('Invalid password.');
+        if (!validPassword || !user) {
+            res.status(400).json({ 
+                status: 'error',
+                code: 400,
+                message: 'Invalid credentials.'
+            });
+        }
 
         const token = generateToken({ username: user.username, email });
-        res.status(200).json({ token });
+        res.status(200).json({ 
+            status: 'success',
+            code: 200,
+            message: 'Logged in successfully',
+            data: token 
+        });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
 };

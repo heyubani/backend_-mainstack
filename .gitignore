@@ -6,3 +6,7 @@ dist
 
 # environment variables
 .env
+
+# mocha
+.nyc_output
+coverage

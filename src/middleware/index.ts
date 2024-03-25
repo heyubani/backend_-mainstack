@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model';
+import { SECRET_KEY } from '../config';
 
 declare module 'express' {
     interface Request {
-        user?: any; // Adjust the type according to your user object
+        user?: any;
     }
 }
   
@@ -19,7 +20,7 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
     }
 
     try {
-        const decoded: any = jwt.verify(token, 'yourSecretKey');
+        const decoded: any = jwt.verify(token, SECRET_KEY);
         const userDetails: any = await User.findOne({ email: decoded.email });
         if (!userDetails) {
             return res.status(400).json({
@@ -28,6 +29,7 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
                 message: 'Invalid or expired token'
             });
         }
+        delete userDetails.password;
         req.user = userDetails;
         next();
     } catch (error) {

@@ -29,7 +29,7 @@ export const createArticle = async (
       data: article
     });
   } catch (error) {
-    throw new Error(error.message); // Properly handle the error
+    throw new Error(error.message); 
   }
 };
 
@@ -54,8 +54,6 @@ export const getAllArticles = async (
       query = {}
     }
 
-    console.log(query.createdAt)
-
     const articles = await articleSchema.find(query)
       .skip((parsedPage - 1) * parsedLimit)
       .limit(parsedLimit);
@@ -67,8 +65,6 @@ export const getAllArticles = async (
       data: articles
     });
   } catch (error) {
-    console.log(error.message);
-    
     throw new Error('Failed to retrieve articles');
   }
 };
