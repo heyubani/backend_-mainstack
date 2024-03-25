@@ -1,8 +1,4 @@
-# baobab-jollof-plus-backend
-
-- A Money saving application
-
----
+### main-stack assessment
 
 ## Requirements
 
@@ -45,8 +41,8 @@ For development, you will only need Node.js (version 16 and above) and a node gl
 
 ## Project Installation
 
-    $ git clone https://github.com/enyata/baobab-backend.git
-    $ cd baobab-backend
+    $ git clone https://github.com/heyubani/backend-mainstack.git
+    $ cd backend-mainstack
     $ npm install
 
 ---
@@ -83,7 +79,7 @@ Npm scripts basically allow us to call (and chain) terminal commands via npm.
 
 ## Postman API Documentation
 
-https://documenter.getpostman.com/view/9438998/2s9YC8uVmW
+https://documenter.getpostman.com/view/14594801/2sA35D4i4A
 
 ___
 
@@ -91,6 +87,7 @@ ___
 
 - NodeJS
 - ExpressJs
+- TypeScript
 - Mocha
 - Chai
 - Postman
