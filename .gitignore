@@ -10,3 +10,6 @@ dist
 # mocha
 .nyc_output
 coverage
+
+
+.DS_Store
